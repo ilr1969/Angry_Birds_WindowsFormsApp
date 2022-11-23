@@ -12,6 +12,7 @@ namespace Angry_Birds_WindowsFormsApp
         public MainForm()
         {
             InitializeComponent();
+            pigBall = new PigBall(this);
             timer = new Timer();
             timer.Interval = 10;
             timer.Tick += Timer_Tick;
@@ -24,19 +25,23 @@ namespace Angry_Birds_WindowsFormsApp
                 ScoreLabel.Text = (Convert.ToInt32(ScoreLabel.Text) + 1).ToString();
                 StartNewGame();
             }
-            if (birdBall.yPos > ClientSize.Height || birdBall.xPos > ClientSize.Width)
+            else if (birdBall.yPos > ClientSize.Height + birdBall.Radius || birdBall.xPos > ClientSize.Width)
             {
                 timer.Stop();
                 birdBall.xPos = 0;
                 birdBall.yPos = ClientSize.Height - birdBall.Radius;
                 birdBall.RecreateBirdBall();
             }
+            else if (birdBall.yPos > ClientSize.Height)
+            {
+                birdBall.xSpeed /= 1.2F;
+                birdBall.ySpeed = -birdBall.ySpeed / 1.1F;
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            pigBall = new PigBall(this);
-            birdBall = new BirdBall(this);
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,6 +63,7 @@ namespace Angry_Birds_WindowsFormsApp
             pigBall.Clear();
             pigBall = new PigBall(this);
             pigBall.Draw();
+            birdBall = new BirdBall(this);
             birdBall.Draw();
             Graphics graphics = CreateGraphics();
             graphics.DrawLine(new Pen(Brushes.Black), ClientSize.Width / 3, 0, ClientSize.Width / 3, ClientSize.Height);

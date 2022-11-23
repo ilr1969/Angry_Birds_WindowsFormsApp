@@ -6,8 +6,8 @@ namespace Angry_Birds_WindowsFormsApp
     public class BirdBall : Ball
     {
         protected Timer timer = new Timer();
-        protected float xSpeed = 5;
-        protected float ySpeed = 5;
+        public float xSpeed = 5;
+        public float ySpeed = 5;
         protected float g = 0.5F;
         public BirdBall(MainForm form) : base(form)
         {
